@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package CoreProtocol;
+
+import "common.proto";
+import "group.proto";
+
+message AnyMessage {
+  optional string transaction_id = 2;
+  oneof message {
+	SimulationStateUpdate sim_state_update = 10;
+	GroupStateUpdate group_state_update = 11;
+
+	ListGroupsRequest list_groups_request = 21;
+	ListGroupsResponse list_groups_response = 22;
+  }
+}
+
+service MessageExchangeService {
+  rpc SendMessages(stream AnyMessage) returns (stream AnyMessage);
+}

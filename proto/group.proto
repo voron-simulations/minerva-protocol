@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package CoreProtocol;
+
+import "common.proto";
+import "unit.proto";
+
+
+message GroupId {
+    string id = 1;
+}
+
+message Group {
+    GroupId id = 1;
+
+    GroupState state = 2;
+
+    repeated Unit units = 3;
+}
+
+message State {
+    float fuelState = 1;
+    float ammoState = 2;
+    float healthState = 3;
+}
+
+message GroupState {
+    State state = 1;
+    bool hasTask = 2;
+}
+
+message GroupStateUpdate {
+    GroupId id = 1;
+    GroupState state = 2;
+}
+
+message ListGroupsRequest {
+    Side side = 1;
+}
+
+message ListGroupsResponse {
+    repeated Group groups = 1;
+}

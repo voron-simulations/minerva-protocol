@@ -1,0 +1,23 @@
+syntax = "proto3";
+package CoreProtocol;
+
+message Position {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+    float direction = 4;
+    float pitch = 5;
+    float roll = 6;
+}
+
+message Side {
+    string name = 1;
+}
+
+message Faction {
+    string name = 1;
+    Side side = 2;
+}
+
+message SimulationStateUpdate {
+}

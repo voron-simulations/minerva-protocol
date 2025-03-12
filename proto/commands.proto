@@ -1,0 +1,9 @@
+syntax="proto3";
+package CoreProtocol;
+
+import "common.proto";
+
+message MoveCommand {
+  Position position = 1;
+  string group_id = 2;
+}
