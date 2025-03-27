@@ -1,10 +1,9 @@
 syntax = "proto3";
 
-package CoreProtocol;
+package Minerva.Protocol;
 
 import "common.proto";
 import "unit.proto";
-
 
 message GroupId {
     string id = 1;
@@ -40,4 +39,8 @@ message ListGroupsRequest {
 
 message ListGroupsResponse {
     repeated Group groups = 1;
+}
+
+message GroupStateUpdateRequest {
+    GroupId id = 1;
 }

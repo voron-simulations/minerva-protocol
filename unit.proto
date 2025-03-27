@@ -1,7 +1,8 @@
 syntax = "proto3";
-package CoreProtocol;
+package Minerva.Protocol;
 
 import "common.proto";
+import "loadout.proto";
 
 enum UnitCategory {
     Unspecified = 0;
@@ -19,10 +20,12 @@ message Unit {
 
 message UnitState {
     Position position = 1;
-    float health = 2;
-    Loadout loadout = 5;
+    Orientation orientation = 2;
+    Velocity velocity = 3;
+    HealthState health = 10;
+    LoadoutState loadout = 11;
 }
 
-message Loadout {
-    repeated Weapon weapons = 1;
+message HealthState {
+    float health = 1;
 }

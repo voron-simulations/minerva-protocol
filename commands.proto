@@ -1,9 +1,33 @@
 syntax="proto3";
-package CoreProtocol;
+package Minerva.Protocol;
 
 import "common.proto";
+import "group.proto";
 
 message MoveCommand {
   Position position = 1;
-  string group_id = 2;
+  GroupId group_id = 2;
+}
+
+message SearchAndDestroyCommand {
+  Position position = 1;
+  GroupId group_id = 2;
+}
+
+message DefendZoneCommand {
+    string group_id = 1;
+    string zone_id = 2;
+    optional Position position = 3; // Specific position within zone
+}
+
+message PatrolCommand {
+    string group_id = 1;
+    repeated Position waypoints = 2;
+    bool loop = 3; // Whether to loop through waypoints
+}
+
+message SupportCommand {
+    string supporter_group_id = 1;
+    string supported_group_id = 2;
+    string support_type = 3; // "resupply", "medical", "repair", etc.
 }

@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "protoc: build",
+			"command": "protoc",
+			"args": [
+				"*.proto",
+				"--csharp_out=out/csharp",
+				"--java_out=out/java",
+				"--python_out=out/python",
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+		}
+	]
+}

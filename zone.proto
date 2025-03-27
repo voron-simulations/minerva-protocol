@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package Minerva.Protocol;
+
+import "common.proto";
+
+message ZoneId {
+    string id = 1;
+}
+
+message ZoneType {
+    string type = 1;
+    string description = 2;
+}
+
+message ZoneState {
+    string controller_side_id = 1;  // ID of the side controlling this zone
+    float control_level = 2;        // Level of control (0-1)
+    bool contested = 3;             // Whether the zone is contested
+    repeated string present_sides = 4; // IDs of sides present in the zone
+}
+
+message Zone {
+    ZoneId id = 1;
+    string name = 2;
+    ZoneType type = 3;
+    repeated Position boundary_points = 4; // Points defining the zone boundary
+    repeated string adjacent_zone_ids = 5; // IDs of adjacent zones
+    int32 strategic_value = 6;     // Strategic importance of the zone
+    ZoneState state = 7;           // Current state of the zone
+    repeated string location_ids = 8; // IDs of locations within this zone
+}
+
+message Location {
+    string id = 1;
+    string name = 2;
+    string type = 3;      // airfield, port, depot, etc.
+    Position position = 4;
+    string zone_id = 5;   // ID of the containing zone
+    float operational_status = 6; // 0-1 representing how functional it is
+    int32 capacity = 7;   // Resource capacity
+}
+
+message ZoneStateUpdate {
+    ZoneId id = 1;
+    ZoneState state = 2;
+}
+
+message ListZonesRequest {
+    optional string side_id = 1; // If provided, only return zones visible to this side
+}
+
+message ListZonesResponse {
+    repeated Zone zones = 1;
+}
+
+message GetZoneRequest {
+    ZoneId id = 1;
+}
+
+message GetZoneResponse {
+    Zone zone = 1;
+}
