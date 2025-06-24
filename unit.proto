@@ -28,4 +28,5 @@ message UnitState {
 
 message HealthState {
     float health = 1;
+    repeated string damage_effects = 2; // e.g. "fuel leak", "engine damage"
 }

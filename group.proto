@@ -5,12 +5,9 @@ package Minerva.Protocol;
 import "common.proto";
 import "unit.proto";
 
-message GroupId {
-    string id = 1;
-}
 
 message Group {
-    GroupId id = 1;
+    string id = 1;
 
     GroupState state = 2;
 
@@ -29,7 +26,7 @@ message GroupState {
 }
 
 message GroupStateUpdate {
-    GroupId id = 1;
+    string id = 1;
     GroupState state = 2;
 }
 
@@ -42,5 +39,5 @@ message ListGroupsResponse {
 }
 
 message GroupStateUpdateRequest {
-    GroupId id = 1;
+    string id = 1;
 }

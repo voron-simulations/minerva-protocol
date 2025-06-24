@@ -7,32 +7,34 @@ import "group.proto";
 import "commands.proto";
 import "zone.proto";
 
-message AnyMessage {
-  optional string transaction_id = 2;
+message AnyServerToClientMessage {
+  optional string transaction_id = 1;
+
+  oneof message { 
+    // *Update and *Response messages only
+    SimulationStateUpdate sim_state_update = 10;
+    GroupStateUpdate group_state_update = 11;
+    ListGroupsResponse list_groups_response = 12;
+    ZoneStateUpdate zone_state_update = 13;
+    ListZonesResponse list_zones_response = 14;
+    GetZoneResponse get_zone_response = 15;
+  }
+}
+
+message AnyClientToServerMessage {
+  optional string transaction_id = 1;
 
   oneof message {
-    // Server-client one-direction messages
-	  SimulationStateUpdate sim_state_update = 10;
-	  GroupStateUpdate group_state_update = 11;
-
-    // Group state messages
-    ListGroupsRequest list_groups_request = 21;
-	  ListGroupsResponse list_groups_response = 22;
-    GroupStateUpdateRequest get_group_request = 23;
-
-    // Zones status
-    ZoneStateUpdate zone_state_update = 30;
-    ListZonesRequest list_zones_request = 31;
-    ListZonesResponse list_zones_response = 32;
-    GetZoneRequest get_zone_request = 33;
-    GetZoneResponse get_zone_response = 34;
-
-    // Commands
-    MoveCommand move_command = 50;
-    SearchAndDestroyCommand sad_command = 51;
+    // *Request and *CommandRequest messages only
+    ListGroupsRequest list_groups_request = 20;
+    GroupStateUpdateRequest get_group_request = 21;
+    ListZonesRequest list_zones_request = 22;
+    GetZoneRequest get_zone_request = 23;
+    MoveCommandRequest move_command = 24;
+    SearchAndDestroyCommandRequest sad_command = 25;
   }
 }
 
 service MessageExchangeService {
-  rpc SendMessages(stream AnyMessage) returns (stream AnyMessage);
+  rpc SendMessages(stream AnyClientToServerMessage) returns (stream AnyServerToClientMessage);
 }

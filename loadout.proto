@@ -7,5 +7,4 @@ message Weapon {
 
 message LoadoutState {
     repeated Weapon weapon = 1;
-    
 }
