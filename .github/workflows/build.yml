@@ -17,26 +17,14 @@ jobs:
         submodules: recursive
         
     - name: Install Protocol Buffers compiler
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y protobuf-compiler
-        protoc --version
-        
+      uses: arduino/setup-protoc@v3
+
     - name: Run build script
       run: ./build.sh
       
-    - name: Verify generated files
-      run: |
-        echo "Checking C# generated files..."
-        ls -la out/csharp/
-        echo "Checking Java generated files..."
-        ls -la out/java/Minerva/Protocol/
-        echo "Checking Python generated files..."
-        ls -la out/python/
-        
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: protobuf-generated-code
         path: out/
-        retention-days: 30
+        retention-days: 3
