@@ -32,6 +32,7 @@ message AnyClientToServerMessage {
     GetZoneRequest get_zone_request = 23;
     MoveCommandRequest move_command = 24;
     SearchAndDestroyCommandRequest sad_command = 25;
+    DefendZoneCommandRequest defend_zone_command = 26;
   }
 }
 
