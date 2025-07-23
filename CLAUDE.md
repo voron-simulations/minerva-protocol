@@ -39,7 +39,7 @@ The project uses a simple bash-based build system:
 The protocol is organized around several key .proto files:
 
 1. **core.proto** - Central message routing and service definitions
-   - `AnyMessage` - Main message wrapper with transaction IDs and oneof message types
+   - `AnyServerToClientMessage` - Main message wrapper with transaction IDs and oneof message types
    - `MessageExchangeService` - Bidirectional streaming gRPC service
    - Imports and orchestrates all other message types
 
@@ -63,7 +63,7 @@ The protocol is organized around several key .proto files:
 
 ### Message Flow Pattern
 
-All messages follow a request/response pattern and are wrapped in `AnyMessage` for routing. The system supports:
+All messages follow a request/response pattern and are wrapped in `AnyServerToClientMessage` for routing. The system supports:
 - Real-time state updates (simulation, group, zone)
 - Command execution (move, combat, support)
 - Query operations (list groups/zones, get specific entities)
@@ -77,7 +77,7 @@ All messages follow a request/response pattern and are wrapped in `AnyMessage` f
 ## Key Design Patterns
 
 - **Transaction IDs**: All messages support optional transaction tracking
-- **Oneof unions**: `AnyMessage` uses protobuf oneof for type-safe message routing
+- **Oneof unions**: `AnyServerToClientMessage` uses protobuf oneof for type-safe message routing
 - **Streaming RPC**: Core service uses bidirectional streaming for real-time communication
 - **State management**: Separate state update messages for different entity types
 - **Military modeling**: Hierarchical structure (sides → factions → groups → units)

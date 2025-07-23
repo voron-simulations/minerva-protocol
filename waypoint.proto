@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package Minerva.Protocol;
+
+import "common.proto";
+
+enum WaypointType {
+    WAYPOINT_TYPE_MOVE = 0;
+    WAYPOINT_TYPE_ATTACK = 1;
+    WAYPOINT_TYPE_GUARD = 2;
+}
+ 
+message Waypoint {
+    WaypointType type = 1;
+    Position position = 2;
+}

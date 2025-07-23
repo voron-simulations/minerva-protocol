@@ -4,7 +4,7 @@ package Minerva.Protocol;
 
 import "common.proto";
 import "unit.proto";
-
+import "waypoint.proto";
 
 message Group {
     string id = 1;
@@ -12,6 +12,7 @@ message Group {
     GroupState state = 2;
 
     repeated Unit units = 3;
+    repeated Waypoint waypoints = 4;
 }
 
 message State {
