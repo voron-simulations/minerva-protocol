@@ -7,35 +7,35 @@ import "group.proto";
 import "commands.proto";
 import "zone.proto";
 
-message AnyServerToClientMessage {
-  optional string transaction_id = 1;
-
-  oneof message { 
-    // *Update and *Response messages only
-    SimulationStateUpdate sim_state_update = 10;
-    GroupStateUpdate group_state_update = 11;
-    ListGroupsResponse list_groups_response = 12;
-    ZoneStateUpdate zone_state_update = 13;
-    ListZonesResponse list_zones_response = 14;
-    GetZoneResponse get_zone_response = 15;
-  }
+// Request for subscribing to state updates
+message UpdateSubscribeRequest {
+  repeated string update_types = 1; // "simulation", "group", "zone" - empty means all types
+  optional string side_id = 2; // Filter updates by side (optional)
 }
 
-message AnyClientToServerMessage {
-  optional string transaction_id = 1;
-
-  oneof message {
-    // *Request and *CommandRequest messages only
-    ListGroupsRequest list_groups_request = 20;
-    GroupStateUpdateRequest get_group_request = 21;
-    ListZonesRequest list_zones_request = 22;
-    GetZoneRequest get_zone_request = 23;
-    MoveCommandRequest move_command = 24;
-    SearchAndDestroyCommandRequest sad_command = 25;
-    DefendZoneCommandRequest defend_zone_command = 26;
+// Union of all possible state update messages
+message StateUpdateMessage {
+  oneof update {
+    SimulationStateUpdate simulation_update = 1;
+    GroupStateUpdate group_update = 2;
+    ZoneStateUpdate zone_update = 3;
   }
 }
 
 service MessageExchangeService {
-  rpc SendMessages(stream AnyClientToServerMessage) returns (stream AnyServerToClientMessage);
+  // Query operations
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse);
+  rpc GetGroupState(GroupStateUpdateRequest) returns (GroupStateUpdate);
+  rpc ListZones(ListZonesRequest) returns (ListZonesResponse);
+  rpc GetZone(GetZoneRequest) returns (GetZoneResponse);
+  
+  // Command operations
+  rpc SendMoveCommand(MoveCommandRequest) returns (MoveCommandResponse);
+  rpc SendSearchAndDestroyCommand(SearchAndDestroyCommandRequest) returns (SearchAndDestroyCommandResponse);
+  rpc SendDefendZoneCommand(DefendZoneCommandRequest) returns (DefendZoneCommandResponse);
+  rpc SendPatrolCommand(PatrolCommandRequest) returns (PatrolCommandResponse);
+  rpc SendSupportCommand(SupportCommandRequest) returns (SupportCommandResponse);
+  
+  // State update subscription
+  rpc SubscribeToUpdates(UpdateSubscribeRequest) returns (stream StateUpdateMessage);
 }
