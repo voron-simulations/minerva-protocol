@@ -1,4 +1,4 @@
-syntax="proto3";
+syntax = "proto3";
 package Minerva.Protocol;
 
 import "common.proto";
@@ -8,35 +8,45 @@ message MoveCommandRequest {
   string group_id = 2;
 }
 
-message MoveCommandResponse {}
-
 message SearchAndDestroyCommandRequest {
   Position position = 1;
   string group_id = 2;
 }
 
-message SearchAndDestroyCommandResponse {}
-
 message DefendZoneCommandRequest {
-    string group_id = 1;
-    string zone_id = 2;
-    optional Position position = 3; // Specific position within zone
+  string group_id = 1;
+  string zone_id = 2;
+  optional Position position = 3; // Specific position within zone
 }
-
-message DefendZoneCommandResponse {}
 
 message PatrolCommandRequest {
-    string group_id = 1;
-    repeated Position waypoints = 2;
-    bool loop = 3; // Whether to loop through waypoints
+  string group_id = 1;
+  repeated Position waypoints = 2;
+  bool loop = 3; // Whether to loop through waypoints
 }
-
-message PatrolCommandResponse {}
 
 message SupportCommandRequest {
-    string supporter_group_id = 1;
-    string supported_group_id = 2;
-    string support_type = 3; // "resupply", "medical", "repair", etc.
+  string supporter_group_id = 1;
+  string supported_group_id = 2;
+  string support_type = 3; // "resupply", "medical", "repair", etc.
 }
 
-message SupportCommandResponse {}
+enum CommandResponseResult {
+  Unknown = 0;
+  Success = 1;
+  Failure = 2;
+}
+
+message CommandResponse {
+  CommandResponseResult result = 1;
+  string reason = 2;
+}
+
+service CommandService {
+  rpc SendMoveCommand(MoveCommandRequest) returns (CommandResponse);
+  rpc SendSearchAndDestroyCommand(SearchAndDestroyCommandRequest)
+      returns (CommandResponse);
+  rpc SendDefendZoneCommand(DefendZoneCommandRequest) returns (CommandResponse);
+  rpc SendPatrolCommand(PatrolCommandRequest) returns (CommandResponse);
+  rpc SendSupportCommand(SupportCommandRequest) returns (CommandResponse);
+}

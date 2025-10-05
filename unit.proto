@@ -5,28 +5,29 @@ import "common.proto";
 import "loadout.proto";
 
 enum UnitCategory {
-    Unspecified = 0;
-    Infantry = 1;
-    Vehicle = 2;
-    Plane = 3;
-    Helicopter = 4;
+  Unspecified = 0;
+  Infantry = 1;
+  Vehicle = 2;
+  Plane = 3;
+  Helicopter = 4;
 }
 
 message Unit {
-    string id = 1;
-    string type = 2;
-    optional UnitState state = 3;
+  string id = 1;
+  UnitCategory category = 2;
+  string type = 3;
+  optional UnitState state = 4;
 }
 
 message UnitState {
-    Position position = 1;
-    Orientation orientation = 2;
-    Velocity velocity = 3;
-    HealthState health = 10;
-    LoadoutState loadout = 11;
+  Position position = 1;
+  Orientation orientation = 2;
+  Velocity velocity = 3;
+  HealthState health = 10;
+  LoadoutState loadout = 11;
 }
 
 message HealthState {
-    float health = 1;
-    repeated string damage_effects = 2; // e.g. "fuel leak", "engine damage"
+  float health = 1;
+  repeated string damage_effects = 2; // e.g. "fuel leak", "engine damage"
 }

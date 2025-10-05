@@ -7,38 +7,41 @@ import "unit.proto";
 import "waypoint.proto";
 
 message Group {
-    string id = 1;
+  string id = 1;
 
-    GroupState state = 2;
+  GroupState state = 2;
 
-    repeated Unit units = 3;
-    repeated Waypoint waypoints = 4;
+  repeated Unit units = 3;
+  repeated Waypoint waypoints = 4;
 }
 
 message State {
-    float fuelState = 1;
-    float ammoState = 2;
-    float healthState = 3;
+  float fuelState = 1;
+  float ammoState = 2;
+  float healthState = 3;
 }
 
 message GroupState {
-    State state = 1;
-    bool hasTask = 2;
+  State state = 1;
+  bool hasTask = 2;
 }
 
 message GroupStateUpdate {
-    string id = 1;
-    GroupState state = 2;
+  string id = 1;
+  GroupState state = 2;
 }
 
-message ListGroupsRequest {
-    Side side = 1;
-}
+message ListGroupsRequest { Side side = 1; }
 
-message ListGroupsResponse {
-    repeated Group groups = 1;
-}
+message ListGroupsResponse { repeated Group groups = 1; }
 
-message GroupStateUpdateRequest {
-    string id = 1;
+message GroupStateUpdateRequest { string id = 1; }
+
+message GroupStateSubscribeRequest { Side side = 1; }
+
+service GroupService {
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse);
+  rpc GetGroupState(GroupStateUpdateRequest) returns (GroupStateUpdate);
+  rpc SubscribeGroupState(GroupStateSubscribeRequest)
+      returns (stream GroupStateUpdate);
 }

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package Minerva.Protocol;
+
+message Weather {
+  float overcast = 1;       // 0 for clear skies, 1 for completely cloudy
+  float wind_speed = 2;     // meters per second
+  float wind_direction = 3; // radians from east counterclockwise
+}

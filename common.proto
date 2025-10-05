@@ -3,36 +3,26 @@ syntax = "proto3";
 package Minerva.Protocol;
 
 message Position {
-    double x = 1;
-    double y = 2;
-    double z = 3;
+  double x = 1;
+  double y = 2;
+  double z = 3;
 }
 
 message Orientation {
-    float direction = 1;
-    float pitch = 2;
-    float roll = 3;
+  float direction = 1;
+  float pitch = 2;
+  float roll = 3;
 }
 
 message Velocity {
-    float x = 1;
-    float y = 2;
-    float z = 3;
+  float x = 1;
+  float y = 2;
+  float z = 3;
 }
 
-message Side {
-    string name = 1;
-}
+message Side { string name = 1; }
 
 message Faction {
-    string name = 1;
-    Side side = 2;
-}
-
-message SimulationStateUpdate {
-    int64 simulation_time = 1;         // Current time in simulation (unix timestamp)
-    string weather_condition = 2;      // Current weather
-    float visibility_distance = 3;     // Visibility in meters
-    float temperature = 4;             // Temperature in Celsius
-    repeated string active_effects = 5; // Any active global effects (sandstorm, fog, etc.)
+  string name = 1;
+  Side side = 2;
 }

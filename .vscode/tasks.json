@@ -18,6 +18,29 @@
 			"problemMatcher": [
 				"$gcc"
 			],
+			"dependsOn": [
+				"format"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "clean",
+			"command": "rm",
+			"args": [
+				"-rf",
+				"out"
+			],
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "format",
+			"command": "clang-format",
+			"args": [
+				"-i",
+				"*.proto"
+			],
+			"problemMatcher": []
 		}
 	]
 }

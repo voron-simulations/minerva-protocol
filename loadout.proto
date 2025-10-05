@@ -1,10 +1,6 @@
 syntax = "proto3";
 package Minerva.Protocol;
 
-message Weapon {
+message Weapon {}
 
-}
-
-message LoadoutState {
-    repeated Weapon weapon = 1;
-}
+message LoadoutState { repeated Weapon weapon = 1; }

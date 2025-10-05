@@ -1,0 +1,32 @@
+syntax = "proto3";
+package Minerva.Protocol;
+
+import "common.proto";
+
+enum Capability {
+  None = 0;
+  Airport = 1;
+  Seaport = 2;
+  Factory = 3;
+}
+
+message Location {
+  string id = 1;
+  string name = 2;
+
+  repeated Capability capabilities = 3;
+
+  Position position = 4;
+
+  map<string, double> resources = 5;
+
+  Side owner = 6;
+}
+
+message GetLocationsRequest { optional Side side = 1; }
+
+message GetLocationsResponse { repeated Location locations = 1; }
+
+service LocationService {
+  rpc GetLocations(GetLocationsRequest) returns (GetLocationsResponse);
+}

@@ -5,12 +5,14 @@ package Minerva.Protocol;
 import "common.proto";
 
 enum WaypointType {
-    WAYPOINT_TYPE_MOVE = 0;
-    WAYPOINT_TYPE_ATTACK = 1;
-    WAYPOINT_TYPE_GUARD = 2;
+  WAYPOINT_TYPE_UNKNOWN = 0;
+  WAYPOINT_TYPE_MOVE = 1;
+  WAYPOINT_TYPE_ATTACK = 2;
+  WAYPOINT_TYPE_GUARD = 3;
+  WAYPOINT_TYPE_LOITER = 4;
 }
- 
+
 message Waypoint {
-    WaypointType type = 1;
-    Position position = 2;
+  WaypointType type = 1;
+  Position position = 2;
 }
