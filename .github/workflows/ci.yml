@@ -18,7 +18,7 @@ jobs:
         submodules: recursive
         
     - name: Install Protocol Buffers compiler
-      uses: voron-software/install-protoc@main
+      uses: taiki-e/install-action@protoc
 
     - name: Run build script
       run: ./build.sh
