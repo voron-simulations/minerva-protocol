@@ -18,7 +18,7 @@ jobs:
         submodules: recursive
         
     - name: Install Protocol Buffers compiler
-      uses: taiki-e/install-action@75ebf3444e39779fd44b9291fcb23947c048a772 # protoc
+      uses: taiki-e/install-action@43db208a1320b48f244d7104891871ad66b59d89 # protoc
 
     - name: Run build script
       run: ./build.sh
