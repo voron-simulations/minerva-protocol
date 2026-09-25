@@ -42,7 +42,15 @@ message SubscribeGroupUpdatesRequest {
 }
 
 message SubscribeGroupUpdatesResponse {
-  Group group = 1;
+  oneof event {
+    // The group was created or changed (including no longer matching this
+    // subscription's side filter as of a side change -- treat the same as
+    // removed).
+    Group upserted = 1;
+    // The group with this id was removed (or stopped matching this
+    // subscription's side filter).
+    string removed_id = 2;
+  }
 }
 
 service GroupService {
