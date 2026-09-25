@@ -18,7 +18,7 @@ All `.proto` files live under `minerva/v1/`, package `minerva.v1`:
 - `unit.proto` — `Unit`, `UnitState`, `HealthState`, `UnitCategory`, `UnitService`.
 - `group.proto` — `Group`, `GroupReadiness`, `GroupService`.
 - `location.proto` — `Location`, `Capability`, `LocationService`.
-- `simulation.proto` — `SimulationInfo`, `SimulationStateUpdate`, `SimulationService`.
+- `simulation.proto` — `WorldSize`, `SimulationInfo`, `SimulationStateUpdate`, `SimulationService`.
 - `commands.proto` — per-command messages (`MoveCommand`, `SearchAndDestroyCommand`, ...),
   `CommandService.SendCommand` (single RPC, oneof over command types).
 - `waypoint.proto`, `weather.proto`, `loadout.proto` — supporting types.
@@ -40,8 +40,9 @@ This repo uses [buf](https://buf.build) — there is no `protoc` step and no bui
 - `buf breaking --against '.git#branch=main'` — check for breaking changes against `main`.
 
 Run all three (lint, format check, build) before opening a PR; CI (`bufbuild/buf-action`)
-runs the same checks, plus a breaking-change check against the published BSR module on
-pull requests.
+runs the same checks, plus a breaking-change check against the PR base branch by
+default. The `buf skip breaking` PR label skips that check for an intentional break;
+adding or removing the label reruns CI.
 
 ## Publishing (BSR)
 
@@ -58,4 +59,5 @@ effect downstream when they explicitly bump the pinned commit.
 - Breaking changes (removing/renaming fields or RPCs, changing field numbers or types)
   are allowed but must be called out explicitly in the PR description, since every
   downstream consumer (`minerva-server` and, transitively, `minerva-arma3`) has to bump
-  its pinned commit and update accordingly.
+  its pinned commit and update accordingly. Apply the `buf skip breaking` PR label
+  only for a deliberate, documented break.

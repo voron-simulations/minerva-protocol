@@ -7,9 +7,14 @@ import "minerva/v1/weather.proto";
 
 option csharp_namespace = "Minerva.Protocol";
 
+message WorldSize {
+  double x_meters = 1;
+  double y_meters = 2;
+}
+
 message SimulationInfo {
   string world_name = 1;
-  repeated double world_size = 2 [packed = true];
+  WorldSize world_size = 2;
   repeated Faction factions = 3;
 
   int64 simulation_start_sim_time = 10; // in-simulation time at scenario start (unix timestamp)
