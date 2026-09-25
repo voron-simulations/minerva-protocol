@@ -7,38 +7,32 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"label": "protoc: build",
-			"command": "protoc",
+			"label": "buf: build",
+			"command": "buf",
 			"args": [
-				"*.proto",
-				"--csharp_out=out/csharp",
-				"--java_out=out/java",
-				"--python_out=out/python",
+				"build"
 			],
-			"problemMatcher": [
-				"$gcc"
-			],
+			"problemMatcher": [],
 			"dependsOn": [
 				"format"
 			]
 		},
 		{
 			"type": "shell",
-			"label": "clean",
-			"command": "rm",
+			"label": "format",
+			"command": "buf",
 			"args": [
-				"-rf",
-				"out"
+				"format",
+				"-w"
 			],
 			"problemMatcher": []
 		},
 		{
 			"type": "shell",
-			"label": "format",
-			"command": "clang-format",
+			"label": "lint",
+			"command": "buf",
 			"args": [
-				"-i",
-				"*.proto"
+				"lint"
 			],
 			"problemMatcher": []
 		}

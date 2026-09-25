@@ -5,9 +5,10 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
 	"features": {
-		"ghcr.io/devcontainers-extra/features/protoc:1": {},
 		"ghcr.io/devcontainers/features/node:2": {}
-	}
+	},
+	// No devcontainer feature publishes the buf CLI; install it directly.
+	"postCreateCommand": "curl -sSL https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 -o /usr/local/bin/buf && chmod +x /usr/local/bin/buf"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

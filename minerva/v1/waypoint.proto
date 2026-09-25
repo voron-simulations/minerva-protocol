@@ -1,11 +1,13 @@
 syntax = "proto3";
 
-package Minerva.Protocol;
+package minerva.v1;
 
-import "common.proto";
+import "minerva/v1/common.proto";
+
+option csharp_namespace = "Minerva.Protocol";
 
 enum WaypointType {
-  WAYPOINT_TYPE_UNKNOWN = 0;
+  WAYPOINT_TYPE_UNSPECIFIED = 0;
   WAYPOINT_TYPE_MOVE = 1;
   WAYPOINT_TYPE_ATTACK = 2;
   WAYPOINT_TYPE_GUARD = 3;
