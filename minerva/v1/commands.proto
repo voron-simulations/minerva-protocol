@@ -2,29 +2,37 @@ syntax = "proto3";
 
 package minerva.v1;
 
-import "minerva/v1/common.proto";
-
 option csharp_namespace = "Minerva.Protocol";
 
+// A command's destination. x/y are always authoritative; a client that only
+// knows the map plane (e.g. a 2D map) omits z and the adapter places the
+// target at the surface. A present z is an exact altitude in meters ASL,
+// for a target that isn't ground-level (e.g. an aircraft's CAP station).
+message CommandTarget {
+  double x = 1;
+  double y = 2;
+  optional double z = 3;
+}
+
 message MoveCommand {
-  Position position = 1;
+  CommandTarget position = 1;
   string group_id = 2;
 }
 
 message SearchAndDestroyCommand {
-  Position position = 1;
+  CommandTarget position = 1;
   string group_id = 2;
 }
 
 message DefendZoneCommand {
   string group_id = 1;
   string zone_id = 2;
-  optional Position position = 3; // specific position within the zone
+  optional CommandTarget position = 3; // specific position within the zone
 }
 
 message PatrolCommand {
   string group_id = 1;
-  repeated Position waypoints = 2;
+  repeated CommandTarget waypoints = 2;
   bool loop = 3; // whether to loop through waypoints
 }
 

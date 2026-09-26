@@ -3,6 +3,7 @@ syntax = "proto3";
 package minerva.v1;
 
 import "minerva/v1/common.proto";
+import "minerva/v1/unit.proto";
 import "minerva/v1/waypoint.proto";
 
 option csharp_namespace = "Minerva.Protocol";
@@ -19,6 +20,10 @@ message Group {
   GroupReadiness readiness = 3;
   bool has_task = 4;
   repeated Waypoint waypoints = 5;
+  // The group's full current membership. Each unit's `group_id` equals this
+  // group's `id`. An `upserted` group (see `SubscribeGroupUpdatesResponse`)
+  // always carries the complete set, not a delta.
+  repeated Unit units = 6;
 }
 
 message ListGroupsRequest {
