@@ -19,7 +19,8 @@ All `.proto` files live under `minerva/v1/`, package `minerva.v1`:
 - `group.proto` — `Group`, `GroupReadiness`, `GroupService`.
 - `location.proto` — `Location`, `Capability`, `LocationService`.
 - `simulation.proto` — `WorldSize`, `SimulationInfo`, `SimulationStateUpdate`, `SimulationService`.
-- `commands.proto` — per-command messages (`MoveCommand`, `SearchAndDestroyCommand`, ...),
+- `commands.proto` — `CommandTarget` (x/y plus optional ASL z, for a command's
+  destination), per-command messages (`MoveCommand`, `SearchAndDestroyCommand`, ...),
   `CommandService.SendCommand` (single RPC, oneof over command types).
 - `waypoint.proto`, `weather.proto`, `loadout.proto` — supporting types.
 
@@ -27,8 +28,9 @@ Units: positions are in meters, `z` is altitude above sea level (ASL). Direction
 (`Orientation.direction`) are compass degrees (0 = north, clockwise). Wind fields on
 `Weather` are reported as-is from the simulation (radians from east, counterclockwise).
 
-`Group` does not embed its units; `Unit.group_id` is the single source of truth for
-membership, queried via `UnitService.ListUnits(group_id)`.
+`Group.units` is the group's full current membership (`Unit.group_id` always equals the
+containing group's `id`); `UnitService.ListUnits`/`GetUnit` read the same state and never
+disagree with it. See `docs/contract.md` for the full wire contract.
 
 ## Working with the protos
 
@@ -48,9 +50,11 @@ adding or removing the label reruns CI.
 
 The module is `buf.build/voron-simulations/minerva`, public, default label `main`. CI
 pushes a new commit to BSR automatically on every push to `main` (`buf push`, using the
-`BUF_TOKEN` repository secret). Consumers pin a specific BSR commit in their
-`buf.gen.yaml` input rather than tracking `main` directly, so protocol changes only take
-effect downstream when they explicitly bump the pinned commit.
+`BUF_TOKEN` repository secret). A consumer may pin a specific BSR commit in its
+`buf.gen.yaml` input so protocol changes only take effect when it explicitly bumps the
+pin, or track the `main` label directly to regenerate against the latest push (as
+`minerva-server` does — its CI fails its "no diff" check whenever `main` has moved ahead
+of its committed generated code, which is the forcing function to update).
 
 ## Compatibility policy
 
